@@ -1,0 +1,9 @@
+
+server:
+  port: 8080
+  tomcat:
+    accept-count: 500
+    max-threads: 500
+    uri-encoding: UTF-8
+  display-name: springdemo
+

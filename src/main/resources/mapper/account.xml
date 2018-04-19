@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.IAccountDao">
+    <resultMap id="BaseResultMap" type="com.example.demo.domain.Account">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="mobile" property="mobile" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id,name,mobile
+    </sql>
+
+    <insert id="insert" parameterType="com.example.demo.domain.Account">
+        INSERT INTO account
+        (
+        id,name,mobile
+        )
+        VALUES
+        (
+        #{id},#{name},#{mobile}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="com.example.demo.domain.Account" >
+        update account
+        <set >
+            <if test="name != null" >
+                name = #{name},
+            </if>
+            <if test="mobile != null" >
+                mobile = #{mobile},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.String" >
+        delete account
+        where id = #{id}
+    </delete>
+
+    <select id="getPageListByParam" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        SELECT  t.*
+        FROM
+        account t
+        WHERE 1 = 1
+        <if test="id != null">
+            and t.id = #{id}
+        </if>
+        <if test="name != null">
+            and t.name = #{name}
+        </if>
+        <if test="mobile != null">
+            and t.mobile = #{mobile}
+        </if>
+        <if test="startIndex != null and pageSize !=null ">
+            limit #{startIndex}, #{pageSize}
+        </if>
+
+    </select>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT  t.*
+        FROM
+        account t
+        WHERE t.id = #{id}
+    </select>
+
+</mapper>
